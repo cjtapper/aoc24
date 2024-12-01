@@ -1,0 +1,30 @@
+[project]
+name = "aoc24"
+version = "0.1.0"
+description = "cjtapper's Advent of Code 24 solutions"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.3",
+    "ruff>=0.8.1",
+]
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_any_generics = true
+disallow_incomplete_defs = true
+no_implicit_optional = true
+show_error_codes = true
+warn_unreachable = true
+warn_unused_ignores = true
+
+[tool.pytest]
+python_files = "part*.py"
+testpaths = "day*"
+
+[tool.uv]
+package = false
+
