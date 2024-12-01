@@ -8,22 +8,33 @@ import support
 
 
 def solve_for(input_data: str) -> int:
-    values = (parse_line(line) for line in input_data.splitlines())
-    for v in values:
-        pass
+    left_numbers = []
+    right_numbers = []
+    for line in input_data.splitlines():
+        left, right = parse_line(line)
+        left_numbers.append(left)
+        right_numbers.append(right)
 
-    # TODO: implement solution here!
-    return 0
+    left_numbers.sort()
+    right_numbers.sort()
+
+    return sum(abs(right - left) for left, right in zip(left_numbers, right_numbers))
 
 
-def parse_line(line: str) -> str:
-    return line
+def parse_line(line: str) -> tuple[int, int]:
+    left, right = line.split()
+    return int(left), int(right)
 
 
 EXAMPLE_1 = """\
-
+3   4
+4   3
+2   5
+1   3
+3   9
+3   3
 """
-EXPECTED_1 = 0
+EXPECTED_1 = 11
 
 
 @pytest.mark.parametrize(
