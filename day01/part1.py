@@ -1,4 +1,4 @@
-# FIXME: https://adventofcode.com/2024/day/x
+# https://adventofcode.com/2024/day/1
 
 from __future__ import annotations
 
