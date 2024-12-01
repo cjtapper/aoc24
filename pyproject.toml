@@ -22,10 +22,9 @@ show_error_codes = true
 warn_unreachable = true
 warn_unused_ignores = true
 
-[tool.pytest]
+[tool.pytest.ini_options]
 python_files = "part*.py"
 testpaths = "day*"
 
 [tool.uv]
 package = false
-
