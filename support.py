@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import argparse
-import os.path
-from typing import TypeAlias
 from collections.abc import Callable
+from pathlib import Path
+from typing import TypeAlias
 
 Solver: TypeAlias = Callable[[str], object]
 
@@ -13,7 +13,8 @@ def cli(module_filename: str, solver: Solver) -> int:
     parser.add_argument(
         "input_file",
         nargs="?",
-        default=os.path.join(os.path.dirname(module_filename), "input.txt"),
+        type=Path,
+        default=Path(module_filename).parent / "input.txt",
     )
     args = parser.parse_args()
 
@@ -24,7 +25,7 @@ def cli(module_filename: str, solver: Solver) -> int:
     raise SystemExit(0)
 
 
-def slurp(filename: str) -> str:
+def slurp(filename: Path) -> str:
     """Read a whole file into memory"""
 
     with open(filename) as f:
