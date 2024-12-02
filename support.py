@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
+import sys
 from collections.abc import Callable
 from pathlib import Path
 from typing import TypeAlias
@@ -13,8 +15,7 @@ def cli(module_filename: str, solver: Solver) -> int:
     parser.add_argument(
         "input_file",
         nargs="?",
-        type=Path,
-        default=Path(module_filename).parent / "input.txt",
+        default=str(Path(module_filename).parent / "input.txt"),
     )
     args = parser.parse_args()
 
@@ -25,8 +26,11 @@ def cli(module_filename: str, solver: Solver) -> int:
     raise SystemExit(0)
 
 
-def slurp(filename: Path) -> str:
-    """Read a whole file into memory"""
+def slurp(file: str) -> str:
+    with contextlib.ExitStack() as stack:
+        if file == "-":
+            stream = sys.stdin
+        else:
+            stream = stack.enter_context(open(file))
 
-    with open(filename) as f:
-        return f.read()
+        return stream.read()
