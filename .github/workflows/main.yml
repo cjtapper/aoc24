@@ -20,13 +20,8 @@ jobs:
           enable-cache: true
           cache-dependency-glob: "uv.lock"
 
-      # The official GitHub setup-python action can be faster than installing
-      # Python with uv, because GitHub caches the Python versions alongside
-      # the runner.
       - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version-file: ".python-version"
+        run: uv python install
 
       - name: Install the project
         run: uv sync --all-extras --dev
