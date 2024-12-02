@@ -26,21 +26,12 @@ def parse_report(s: str) -> Report:
 
 
 def is_safe(report: Report) -> bool:
-    last_sign = None
-    for a, b in itertools.pairwise(report):
-        diff = b - a
-        next_sign = sign(diff)
-        if last_sign is not None and (next_sign != last_sign or next_sign == 0):
-            return False
-        last_sign = next_sign
-        if not MIN_LEVEL_DIFFERENCE <= abs(diff) <= MAX_LEVEL_DIFFERENCE:
-            return False
-
-    return True
-
-
-def sign(value: int) -> int:
-    return value / abs(value) if value else 0
+    differences = [b - a for a, b in itertools.pairwise(report)]
+    is_monotonic = all(d < 0 for d in differences) or all(d > 0 for d in differences)
+    all_differences_tolerable = all(
+        MIN_LEVEL_DIFFERENCE <= abs(d) <= MAX_LEVEL_DIFFERENCE for d in differences
+    )
+    return is_monotonic and all_differences_tolerable
 
 
 EXAMPLE_1 = """\
