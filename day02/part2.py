@@ -25,7 +25,7 @@ def parse_report(s: str) -> Report:
     return [int(level) for level in s.split()]
 
 
-def is_safe(report: Report, *, recurse=True) -> bool:
+def is_safe(report: Report, *, recurse: bool = True) -> bool:
     return any(
         _is_safe(report[:i] + report[i + 1 :])  # remove one level from report
         for i in range(len(report))
