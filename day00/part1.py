@@ -7,7 +7,7 @@ import pytest
 import support
 
 
-def solve_for(input_data: str) -> int:
+def solve(input_data: str) -> int:
     values = (parse_line(line) for line in input_data.splitlines())
     for v in values:
         pass
@@ -32,9 +32,9 @@ EXPECTED_1 = 0
         (EXAMPLE_1, EXPECTED_1),
     ],
 )
-def test_example(input_data, expected):
-    assert solve_for(input_data) == expected
+def test_solve(input_data, expected):
+    assert solve(input_data) == expected
 
 
 if __name__ == "__main__":
-    support.cli(__file__, solve_for)
+    support.cli(__file__, solve)

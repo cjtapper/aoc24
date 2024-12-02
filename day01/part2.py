@@ -9,7 +9,7 @@ import pytest
 import support
 
 
-def solve_for(input_data: str) -> int:
+def solve(input_data: str) -> int:
     left_numbers: list[int] = []
     right_numbers = Counter[int]()
     for line in input_data.splitlines():
@@ -42,9 +42,9 @@ EXPECTED_1 = 31
         (EXAMPLE_1, EXPECTED_1),
     ],
 )
-def test_example(input_data, expected):
-    assert solve_for(input_data) == expected
+def test_solve(input_data, expected):
+    assert solve(input_data) == expected
 
 
 if __name__ == "__main__":
-    support.cli(__file__, solve_for)
+    support.cli(__file__, solve)
