@@ -26,7 +26,10 @@ def parse_report(s: str) -> Report:
 
 
 def is_safe(report: Report, *, recurse=True) -> bool:
-    return any(_is_safe(report[:i] + report[i + 1 :]) for i in range(len(report)))
+    return any(
+        _is_safe(report[:i] + report[i + 1 :])  # remove one level from report
+        for i in range(len(report))
+    )
 
 
 def _is_safe(report: Report) -> bool:
