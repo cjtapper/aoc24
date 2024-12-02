@@ -2,28 +2,56 @@
 
 from __future__ import annotations
 
+import itertools
+
 import pytest
 
 import support
 
+MIN_LEVEL_DIFFERENCE = 1
+MAX_LEVEL_DIFFERENCE = 3
+
 
 def solve(input_data: str) -> int:
-    values = (parse_line(line) for line in input_data.splitlines())
-    for v in values:
-        pass
+    reports = (parse_report(line) for line in input_data.splitlines())
 
-    # TODO: implement solution here!
-    return 0
+    return sum(is_safe(report) for report in reports)
 
 
-def parse_line(line: str) -> str:
-    return line
+Report = list[int]
+
+
+def parse_report(s: str) -> Report:
+    return [int(level) for level in s.split()]
+
+
+def is_safe(report: Report) -> bool:
+    last_sign = None
+    for a, b in itertools.pairwise(report):
+        diff = b - a
+        next_sign = sign(diff)
+        if last_sign is not None and (next_sign != last_sign or next_sign == 0):
+            return False
+        last_sign = next_sign
+        if not MIN_LEVEL_DIFFERENCE <= abs(diff) <= MAX_LEVEL_DIFFERENCE:
+            return False
+
+    return True
+
+
+def sign(value: int) -> int:
+    return value / abs(value) if value else 0
 
 
 EXAMPLE_1 = """\
-
+7 6 4 2 1
+1 2 7 8 9
+9 7 6 2 1
+1 3 2 4 5
+8 6 4 4 1
+1 3 6 7 9
 """
-EXPECTED_1 = 0
+EXPECTED_1 = 2
 
 
 @pytest.mark.parametrize(
