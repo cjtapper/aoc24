@@ -4,12 +4,12 @@ Solved in typed Python 3.13
 
 ### Example
 ```shell
-$ python -m day00.part1
+$ python -m day01.part1
 ```
 
 ### Daily template
-There's a template provided in `day00`. Create a new package for each day like:
+There's a template provided in `template`. Create a new package for each day like:
 
 ```shell
-$ cp -r day00 day01
+$ cp -r template day01
 ```
