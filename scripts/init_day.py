@@ -1,7 +1,3 @@
-# copy template folder to new day
-# fix the link in the top of the file
-# download input
-
 import string
 import argparse
 import shutil
@@ -34,7 +30,5 @@ updated_contents = template.substitute(DAY=args.day)
 
 with open(f"./day{args.day:02}/part1.py", "w") as file:
     file.write(updated_contents)
-
-
 
 raise SystemExit(0)
