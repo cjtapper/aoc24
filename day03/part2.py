@@ -11,16 +11,20 @@ import support
 
 def solve(input_data: str) -> int:
     pattern = re.compile(r"do\(\)|don't\(\)|mul\((\d+),(\d+)\)")
+    program = pattern.finditer(input_data)
+
     acc = 0
-    do = True
-    for match in pattern.finditer(input_data):
-        if match.group(0) == "do()":
-            do = True
-        elif match.group(0) == "don't()":
-            do = False
-        elif do:
-            a, b = match.groups()
-            acc += int(a) * int(b)
+    process_mul = True
+    for instruction in program:
+        match instruction.group(0):
+            case "do()":
+                process_mul = True
+            case "don't()":
+                process_mul = False
+            case _ if process_mul:
+                a, b = instruction.groups()
+                acc += int(a) * int(b)
+
     return acc
 
 
