@@ -15,9 +15,34 @@ def solve(input_data: str) -> int:
     acc = 0
     for update in updates:
         if check_rules(update, rules):
+            continue
+        else:
+            update = sort_by_rules(update, rules)
             middle_page = update[len(update) // 2]
             acc += middle_page
     return acc
+
+
+def sort_by_rules(update, rules):
+    update = update.copy()
+    recheck = True
+    while recheck:
+        recheck = False
+        for rule in rules:
+            before = rule["before"]
+            after = rule["after"]
+
+            if before not in update or after not in update:
+                continue
+
+            if update.index(before) > update.index(after):
+                update[update.index(before)], update[update.index(after)] = (
+                    update[update.index(after)],
+                    update[update.index(before)],
+                )
+                recheck = True
+
+    return update
 
 
 def check_rules(update: list, rules):
@@ -38,7 +63,7 @@ def parse_rule(line: str) -> str:
     return {"before": int(before), "after": int(after)}
 
 
-def parse_update(line: str) -> str:
+def parse_update(line: str) -> list:
     return [int(page) for page in line.split(",")]
 
 
@@ -72,7 +97,7 @@ EXAMPLE_1 = """\
 61,13,29
 97,13,75,29,47
 """
-EXPECTED_1 = 143
+EXPECTED_1 = 123
 
 
 @pytest.mark.parametrize(
